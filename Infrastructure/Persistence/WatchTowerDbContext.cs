@@ -20,4 +20,20 @@ public class WatchTowerDbContext: DbContext
 
     public DbSet<MonitorCheck> MonitorChecks => Set<MonitorCheck>();
 
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+            // Convert bool into int 0 or 1
+            modelBuilder.Entity<MonitorCheck>()
+                .Property(x => x.IsSuccess)
+                .HasConversion<int>()
+                .HasColumnType("NUMBER(1)");
+            modelBuilder.Entity<Monitor>()
+                .Property(y => y.IsActive)
+                .HasConversion<int>()
+                .HasColumnType("NUMBER(1)");
+
+
+
+    }
 }
